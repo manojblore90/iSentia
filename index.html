@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Isentia puzzle</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="js/angular.js"></script>
+    <script type="text/javascript" src="js/slidingPuzzle.js"></script>
+    <script type="text/javascript" src="js/app.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/styles.css"/>
+</head>
+<body ng-app="puzzleApp">
+<ul id="types">
+    <li ng-init="Title='Image Puzzle'" ng-class="{'selected': t.id == type}">
+        <h2>{{Title}}</h2>
+    </li>
+</ul>
+
+<div ng-include="type"></div>
+
+<script type="text/ng-template" id="sliding-puzzle">
+    <fieldset id="sliding-advanced" ng-controller="slidingCtrl">
+        <div ng-repeat="puzzle in puzzles">
+            <h2>Slide Images on right to match the given image</h2>
+
+            <div class="status">
+                solved: <strong>{{puzzle.api.isSolved()}}</strong>
+            </div>
+            <div class="size">
+                <button ng-click="puzzle.api.shuffle()">shuffle</button>
+                <button ng-click="puzzle.api.solve()">solve</button>
+            </div>
+            <sliding-puzzle api="puzzle.api" size="{{puzzle.rows}}x{{puzzle.cols}}"
+                            src="{{puzzle.src}}"></sliding-puzzle>
+            <div>
+                <p>moves: <strong>{{puzzle.api.moves}}</strong></p>
+            </div>
+        </div>
+    </fieldset>
+</script>
+</body>
+</html>
